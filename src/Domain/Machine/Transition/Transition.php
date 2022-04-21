@@ -13,4 +13,9 @@ class Transition
     ];
 
     private string $transition;
+
+    public function getTransition(): string
+    {
+        return $this->transition;
+    }
 }

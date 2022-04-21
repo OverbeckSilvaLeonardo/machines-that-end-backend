@@ -9,8 +9,7 @@ use App\Domain\Machine\Transition\TransitionCollection;
 
 class Machine
 {
-    private StateCollection $possibleStates;
     private State $currentState;
-
+    private StateCollection $possibleStates;
     private TransitionCollection $possibleTransitions;
 }
