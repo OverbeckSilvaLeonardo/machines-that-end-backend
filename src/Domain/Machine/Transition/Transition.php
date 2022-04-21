@@ -14,6 +14,11 @@ class Transition
 
     private string $transition;
 
+    public function __construct(string $transition)
+    {
+        $this->transition = $transition;
+    }
+
     public function getTransition(): string
     {
         return $this->transition;

@@ -24,4 +24,9 @@ class StateCollection
     {
         return $this->states;
     }
+
+    public function getFirst(): State
+    {
+        return $this->states[0];
+    }
 }

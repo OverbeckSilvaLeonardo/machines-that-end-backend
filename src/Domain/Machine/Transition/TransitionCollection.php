@@ -24,4 +24,15 @@ class TransitionCollection
     {
         return $this->transitions;
     }
+
+    public function has(Transition $transition): bool
+    {
+        foreach ($this->transitions as $possible) {
+            if ($possible->getTransition() == $transition->getTransition()) {
+                return true;
+            }
+        }
+
+        return false;
+    }
 }
