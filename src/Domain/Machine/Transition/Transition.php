@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Domain\Machine;
+namespace App\Domain\Machine\Transition;
 
 class Transition
 {
@@ -11,4 +11,6 @@ class Transition
         '18:00',
         '22:00',
     ];
+
+    private string $transition;
 }
