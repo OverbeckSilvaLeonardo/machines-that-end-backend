@@ -4,11 +4,17 @@ namespace App\Domain\Machine\State;
 
 class State
 {
+
+    public const AWAKE = 'awake';
+    public const WORKING = 'working';
+    public const RESTING = 'resting';
+    public const SLEEPING = 'sleeping';
+
     private const POSSIBLE = [
-        'awake',
-        'working',
-        'resting',
-        'sleeping',
+        self::AWAKE,
+        self::WORKING,
+        self::RESTING,
+        self::SLEEPING,
     ];
 
     private string $state;
@@ -21,7 +27,6 @@ class State
 
         $this->state = $state;
     }
-
 
     public function getState(): string
     {

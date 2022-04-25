@@ -28,7 +28,7 @@ class Machine
             throw new \InvalidArgumentException('The transition sent is not possible on this machine.');
         }
 
-        $this->currentState = $this->possibleStates->getNext($transition);
+        $this->currentState = $this->possibleStates->getNext($this, $transition);
 
         return $this->currentState;
     }
