@@ -21,13 +21,18 @@ class Transition
 
     private string $transition;
 
-    public function __construct(string $transition)
+    private function __construct(string $transition)
     {
         if (!in_array($transition, self::POSSIBLE)) {
             throw new \InvalidArgumentException('Invalid transition type.');
         }
 
         $this->transition = $transition;
+    }
+
+    public static function fromString(string $transition): Transition
+    {
+        return new Transition($transition);
     }
 
     public function getTransition(): string

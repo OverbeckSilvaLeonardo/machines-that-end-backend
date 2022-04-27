@@ -28,6 +28,11 @@ class State
         $this->state = $state;
     }
 
+    public static function fromString($state): State
+    {
+        return new State($state);
+    }
+
     public function getState(): string
     {
         return $this->state;

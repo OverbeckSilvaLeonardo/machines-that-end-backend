@@ -14,12 +14,36 @@ class Machine
     private StateCollection $possibleStates;
     private TransitionCollection $possibleTransitions;
 
-    public function __construct(StateCollection $possibleStates, TransitionCollection $possibleTransitions)
+    private function __construct(StateCollection $possibleStates, TransitionCollection $possibleTransitions)
     {
         $this->possibleStates = $possibleStates;
         $this->possibleTransitions = $possibleTransitions;
 
         $this->currentState = $possibleStates->getFirst();
+    }
+
+    public static function fromArrayOfPossibleTransitionsAndStates(array $possible): Machine
+    {
+        if (!isset($possible['transitions'])) {
+            throw new \InvalidArgumentException('Please inform the possible transitions for the machine.');
+        }
+
+        if (!isset($possible['states'])) {
+            throw new \InvalidArgumentException('Please inform the possible states for the machine.');
+        }
+
+        $possibleTransitions = new TransitionCollection();
+        $possibleStates = new StateCollection();
+
+        foreach ($possible['transitions'] as $transition) {
+            $possibleTransitions->append(Transition::fromString($transition));
+        }
+
+        foreach ($possible['states'] as $state) {
+            $possibleStates->append(State::fromString($state));
+        }
+
+        return new Machine($possibleStates, $possibleTransitions);
     }
 
     public function applyTransition(Transition $transition): State
@@ -28,7 +52,7 @@ class Machine
             throw new \InvalidArgumentException('The transition sent is not possible on this machine.');
         }
 
-        $this->currentState = $this->possibleStates->getNext($this, $transition);
+        $this->currentState = $this->possibleStates->getNext($transition);
 
         return $this->currentState;
     }

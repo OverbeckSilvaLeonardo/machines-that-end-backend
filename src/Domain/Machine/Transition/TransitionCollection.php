@@ -17,7 +17,7 @@ class TransitionCollection
             }
         }
 
-        array_push($this->transitions, $new);
+        $this->transitions[] = $new;
     }
 
     public function getTransitions(): array

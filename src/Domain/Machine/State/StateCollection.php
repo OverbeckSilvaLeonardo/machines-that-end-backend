@@ -20,7 +20,7 @@ class StateCollection
             }
         }
 
-        array_push($this->states, $new);
+        $this->states[] = $new;
     }
 
     public function getStates(): array
@@ -33,7 +33,7 @@ class StateCollection
         return $this->states[0];
     }
 
-    public function getNext(Machine $machine, Transition $transition): State
+    public function getNext(Transition $transition): State
     {
         if ($transition->isEight()) {
             return $this->find(State::AWAKE);
