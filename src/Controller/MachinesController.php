@@ -13,9 +13,9 @@ class MachinesController extends AppController
 {
     private Session $session;
 
-    public function __construct()
+    public function initialize(): void
     {
-        parent::__construct();
+        parent::initialize();
         $this->session = $this->getRequest()->getSession();
     }
 
