@@ -14,6 +14,15 @@ class Machine
     private StateCollection $possibleStates;
     private TransitionCollection $possibleTransitions;
 
+    public function toArray(): array
+    {
+        return [
+            'current_state' => $this->currentState->getState(),
+            'possible_states' => array_map(fn (State $state) => $state->getState(), $this->possibleStates->getStates()),
+            'possible_transitions' => array_map(fn (Transition $state) => $state->getTransition(), $this->possibleTransitions->getTransitions())
+        ];
+    }
+
     private function __construct(StateCollection $possibleStates, TransitionCollection $possibleTransitions)
     {
         $this->possibleStates = $possibleStates;

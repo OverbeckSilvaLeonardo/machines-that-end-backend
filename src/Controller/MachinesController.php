@@ -41,11 +41,12 @@ class MachinesController extends AppController
             $machines = $this->session->read('Machines');
             $machines[] = $machine;
 
+
             $this->session->write('Machines', $machines);
 
             return $response
                 ->withStatus(200)
-                ->withStringBody(json_encode(['success' => true, 'message' => 'The machine was added to the session.', 'machine' => $machine]));
+                ->withStringBody(json_encode(['success' => true, 'message' => 'The machine was added to the session.', 'machine' => $machine->toArray()]));
 
         } catch (\InvalidArgumentException $e) {
             return $response

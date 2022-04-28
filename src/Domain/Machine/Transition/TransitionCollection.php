@@ -7,7 +7,7 @@ class TransitionCollection
     /**
      * @var \App\Domain\Machine\Transition\Transition[] $transitions
      */
-    private array $transitions;
+    private array $transitions = [];
 
     public function append(Transition $new): void
     {
