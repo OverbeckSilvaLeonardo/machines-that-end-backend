@@ -61,7 +61,35 @@ class MachinesController extends AppController
 
     public function transit(string $id): Response
     {
+        /** @var \App\Domain\Machine\Machine $machine */
+        $machine = array_filter($this->session->read('Machines'), function ($machine) use ($id) {
+            return $machine->getId() == $id;
+        })[0];
 
+        $response = $this->getResponse()
+            ->withType('application/json');
+
+        if ($this->getRequest()->getData('state') && !$this->getRequest()->getData('transition')) {
+            return $response
+                ->withStatus(200)
+                ->withStringBody(json_encode([
+                    'success' => true,
+                    'message' => 'The possible transitions were retrieved successfully.',
+                    'possible_transitions' => $machine->getPossibleTransitions()
+                ]));
+        }
+
+        $transition = $this->getRequest()->getData('transition');
+
+         $machine->applyTransition(Transition::fromString($transition));
+
+         return $response
+             ->withStatus(200)
+             ->withStringBody(json_encode([
+                 'success' => true,
+                 'message' => 'The state of the machine has been updated.',
+                 'machine' => $machine
+             ]));
     }
 
     public function remove(string $id): Response
