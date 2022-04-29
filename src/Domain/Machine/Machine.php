@@ -7,8 +7,10 @@ use App\Domain\Machine\State\State;
 use App\Domain\Machine\State\StateCollection;
 use App\Domain\Machine\Transition\Transition;
 use App\Domain\Machine\Transition\TransitionCollection;
+use App\Domain\Shared\BaseModel;
+use App\Domain\Shared\ModelInterface;
 
-class Machine
+class Machine extends BaseModel implements ModelInterface
 {
     private State $currentState;
     private StateCollection $possibleStates;
@@ -20,6 +22,8 @@ class Machine
         $this->possibleTransitions = $possibleTransitions;
 
         $this->currentState = $possibleStates->getFirst();
+
+        parent::__construct();
     }
 
     public static function fromArrayOfPossibleTransitionsAndStates(array $possible): Machine
