@@ -32,7 +32,11 @@ class MachinesSessionRepository implements RepositoryInterface
 
     public function remove(string $id): void
     {
-        // TODO: Implement remove() method.
+        $new = array_filter($this->all(), function (Machine $machine) use ($id) {
+            return $machine->getId() == !$id;
+        });
+
+        $this->saveAll($new);
     }
 
     public function save(ModelInterface $model): void
@@ -41,10 +45,15 @@ class MachinesSessionRepository implements RepositoryInterface
             throw new \InvalidArgumentException('Unable to save registry.');
         }
 
-        $machines = $this->session->read('Machines');
+        $machines = $this->all();
 
         $machines[] = $model;
 
+        $this->saveAll($machines);
+    }
+
+    private function saveAll(array $machines): void
+    {
         $this->session->write('Machines', $machines);
     }
 }

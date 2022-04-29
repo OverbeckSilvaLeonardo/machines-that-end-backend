@@ -89,6 +89,6 @@ class MachinesController extends AppController
 
     public function remove(string $id): Response
     {
-
+        $this->repository->remove($id);
     }
 }
