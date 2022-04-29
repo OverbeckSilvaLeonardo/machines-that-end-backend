@@ -10,7 +10,7 @@ class StateCollection
     /**
      * @var \App\Domain\Machine\State\State[] $states
      */
-    private array $states;
+    private array $states = [];
 
     public function append(State $new): void
     {
@@ -61,12 +61,14 @@ class StateCollection
         throw new \RuntimeException('The machine does not have a corresponding state for the transition sent.');
     }
 
-    private function find(string $wantedState): State
+    private function find(string $wantedState): ?State
     {
         foreach ($this->states as $state) {
             if ($state->getState() == $wantedState) {
                 return $state;
             }
         }
+
+        return null;
     }
 }

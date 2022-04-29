@@ -43,7 +43,7 @@ class MachinesController extends AppController
 
             return $response
                 ->withStatus(200)
-                ->withStringBody(json_encode(['success' => true, 'message' => 'The machine was added to the session.', 'machine' => $machine]));
+                ->withStringBody(json_encode(['success' => true, 'message' => 'The machine was added to the session.', 'machine' => $machine->toArray()]));
 
         } catch (\InvalidArgumentException $e) {
             return $response
