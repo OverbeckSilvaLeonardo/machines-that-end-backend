@@ -15,9 +15,9 @@ class MachinesSessionMachinesRepository implements MachinesRepositoryInterface
         $this->session = $session;
     }
 
-    public function all(): array
+    public function all(): ?array
     {
-        /** @var \App\Domain\Machine\Machine[] $machines */
+        /** @var \App\Domain\Machine\Machine[]|null $machines */
         $machines = $this->session->read('Machines');
 
         return $machines;
