@@ -23,7 +23,7 @@ class MachinesController extends AppController
 
     public function index(): Response
     {
-        $machines = $this->session->read('Machines');
+        $machines = $this->repository->all();
 
         return $this->getResponse()
             ->withType('application/json')
