@@ -3,8 +3,8 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
-use App\DAL\MachinesSessionRepository;
-use App\DAL\RepositoryInterface;
+use App\DAL\MachinesSessionMachinesRepository;
+use App\DAL\MachinesRepositoryInterface;
 use App\Domain\Machine\Machine;
 use App\Domain\Machine\Transition\Transition;
 use Cake\Http\Response;
@@ -12,12 +12,12 @@ use Cake\Http\Session;
 
 class MachinesController extends AppController
 {
-    private RepositoryInterface $repository;
+    private MachinesRepositoryInterface $repository;
 
     public function initialize(): void
     {
         parent::initialize();
-        $this->repository = new MachinesSessionRepository($this->getRequest()->getSession());
+        $this->repository = new MachinesSessionMachinesRepository($this->getRequest()->getSession());
     }
 
 

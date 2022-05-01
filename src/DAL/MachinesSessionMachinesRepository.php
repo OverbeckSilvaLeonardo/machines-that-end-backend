@@ -6,7 +6,7 @@ use App\Domain\Machine\Machine;
 use App\Domain\Shared\ModelInterface;
 use Cake\Http\Session;
 
-class MachinesSessionRepository implements RepositoryInterface
+class MachinesSessionMachinesRepository implements MachinesRepositoryInterface
 {
     public Session $session;
 
@@ -39,15 +39,11 @@ class MachinesSessionRepository implements RepositoryInterface
         $this->saveAll($new);
     }
 
-    public function save(ModelInterface $model): void
+    public function save(Machine $machine): void
     {
-        if (!$model instanceof Machine::class) {
-            throw new \InvalidArgumentException('Unable to save registry.');
-        }
-
         $machines = $this->all();
 
-        $machines[] = $model;
+        $machines[] = $machine;
 
         $this->saveAll($machines);
     }
