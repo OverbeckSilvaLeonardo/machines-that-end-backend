@@ -45,9 +45,9 @@ POST /machines/create
 }
 ```
 
-Adds a machine to the session.
+Adds a machine to the session. The new machine is returned in the response.
 
-### transit
+### Change machine state
 ```json
 POST /machines/transit/:id
 
@@ -62,23 +62,12 @@ OR
 }
 ```
 
-If you only send the state, the application will return the machines possible transitions;
+If you only send the state, the application will return the machine's possible transitions;
 If you send a valid transition, the application will update the machine state.
 
-### transit
+### Remove
 ```json
-POST /machines/transit/:id
-
-{
-  "state": "awake"
-}
-
-OR
-
-{
-    "transition": "08:00"
-}
+DELETE /machines/remove/:id
 ```
 
-If you only send the state, the application will return the machines possible transitions;
-If you send a valid transition, the application will update the machine state.
+Will delete the desired machine.
