@@ -36,6 +36,15 @@ class MachinesController extends AppController
         $response = $this->getResponse()
             ->withType('application/json');
 
+        if (!$this->getRequest()->is('post')) {
+            return $response
+                ->withStatus(400)
+                ->withStringBody(json_encode([
+                    'success' => false,
+                    'message' => 'Invalid request method.',
+                ]));
+        }
+
         try {
             $machine = Machine::fromArrayOfPossibleTransitionsAndStates($this->getRequest()->getData());
 
@@ -64,6 +73,15 @@ class MachinesController extends AppController
         $response = $this->getResponse()
             ->withType('application/json');
 
+        if (!$this->getRequest()->is('post')) {
+            return $response
+                ->withStatus(400)
+                ->withStringBody(json_encode([
+                    'success' => false,
+                    'message' => 'Invalid request method.',
+                ]));
+        }
+
         if ($this->getRequest()->getData('state') && !$this->getRequest()->getData('transition')) {
             return $response
                 ->withStatus(200)
@@ -89,6 +107,12 @@ class MachinesController extends AppController
 
     public function remove(string $id): Response
     {
+        if ($this->getRequest()->is('delete')) {
+            return $this->getResponse()
+                ->withType('application/json')
+                ->withStatus(400)
+                ->withStringBody(json_encode(['success' => false, 'message' => 'Invalid request method. ']));
+        }
         $this->repository->remove($id);
     }
 }
