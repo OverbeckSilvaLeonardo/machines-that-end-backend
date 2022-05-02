@@ -28,35 +28,28 @@ Then visit `http://localhost:8765` to see the welcome page.
 
 ## Enpoints
 
-- ### List
-```
-GET /machines
-```
+- ### List - `GET /machines`
 
 Returns the machines saved in the session.
 
-- ### Add
+- ### Add - `POST /machines/create`
 ```json
-POST /machines/create
-
 {
-  "states": ["awake", "sleeping", ...],
-  "transitions": ["08:00", "12:00", ...],
+  "states": ["awake", "sleeping", "..."],
+  "transitions": ["08:00", "12:00", "..."]
 }
 ```
 
 Adds a machine to the session. The new machine is returned in the response.
 
-- ### Change machine state
+- ### Change machine state - `POST /machines/transit/:id`
 ```json
-POST /machines/transit/:id
-
 {
   "state": "awake"
 }
-
+```
 OR
-
+```json
 {
     "transition": "08:00"
 }
@@ -65,9 +58,6 @@ OR
 If you only send the state, the application will return the machine's possible transitions;
 If you send a valid transition, the application will update the machine's state.
 
-- ### Remove
-```json
-DELETE /machines/remove/:id
-```
+- ### Remove - `DELETE /machines/remove/:id`
 
 Will delete the desired machine.
