@@ -28,14 +28,14 @@ Then visit `http://localhost:8765` to see the welcome page.
 
 ## Enpoints
 
-### List
+- ### List
 ```
 GET /machines
 ```
 
 Returns the machines saved in the session.
 
-### Add
+- ### Add
 ```json
 POST /machines/create
 
@@ -47,7 +47,7 @@ POST /machines/create
 
 Adds a machine to the session. The new machine is returned in the response.
 
-### Change machine state
+- ### Change machine state
 ```json
 POST /machines/transit/:id
 
@@ -63,9 +63,9 @@ OR
 ```
 
 If you only send the state, the application will return the machine's possible transitions;
-If you send a valid transition, the application will update the machine state.
+If you send a valid transition, the application will update the machine's state.
 
-### Remove
+- ### Remove
 ```json
 DELETE /machines/remove/:id
 ```
