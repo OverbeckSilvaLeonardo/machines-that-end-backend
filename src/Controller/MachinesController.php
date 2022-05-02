@@ -3,26 +3,27 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
+use App\DAL\MachinesSessionMachinesRepository;
+use App\DAL\MachinesRepositoryInterface;
 use App\Domain\Machine\Machine;
 use App\Domain\Machine\Transition\Transition;
-use App\Domain\Machine\Transition\TransitionCollection;
 use Cake\Http\Response;
 use Cake\Http\Session;
 
 class MachinesController extends AppController
 {
-    private Session $session;
+    private MachinesRepositoryInterface $repository;
 
     public function initialize(): void
     {
         parent::initialize();
-        $this->session = $this->getRequest()->getSession();
+        $this->repository = new MachinesSessionMachinesRepository($this->getRequest()->getSession());
     }
 
 
     public function index(): Response
     {
-        $machines = $this->session->read('Machines');
+        $machines = $this->repository->all();
 
         return $this->getResponse()
             ->withType('application/json')
@@ -38,11 +39,7 @@ class MachinesController extends AppController
         try {
             $machine = Machine::fromArrayOfPossibleTransitionsAndStates($this->getRequest()->getData());
 
-            $machines = $this->session->read('Machines');
-            $machines[] = $machine;
-
-
-            $this->session->write('Machines', $machines);
+            $this->repository->save($machine);
 
             return $response
                 ->withStatus(200)
@@ -62,10 +59,7 @@ class MachinesController extends AppController
 
     public function transit(string $id): Response
     {
-        /** @var \App\Domain\Machine\Machine $machine */
-        $machine = array_filter($this->session->read('Machines'), function ($machine) use ($id) {
-            return $machine->getId() == $id;
-        })[0];
+        $machine = $this->repository->find($id);
 
         $response = $this->getResponse()
             ->withType('application/json');
@@ -95,6 +89,6 @@ class MachinesController extends AppController
 
     public function remove(string $id): Response
     {
-
+        $this->repository->remove($id);
     }
 }
