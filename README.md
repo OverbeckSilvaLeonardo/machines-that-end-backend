@@ -1,12 +1,4 @@
-# CakePHP Application Skeleton
-
-![Build Status](https://github.com/cakephp/app/actions/workflows/ci.yml/badge.svg?branch=master)
-[![Total Downloads](https://img.shields.io/packagist/dt/cakephp/app.svg?style=flat-square)](https://packagist.org/packages/cakephp/app)
-[![PHPStan](https://img.shields.io/badge/PHPStan-level%207-brightgreen.svg?style=flat-square)](https://github.com/phpstan/phpstan)
-
-A skeleton for creating applications with [CakePHP](https://cakephp.org) 4.x.
-
-The framework source code can be found here: [cakephp/cakephp](https://github.com/cakephp/cakephp).
+# Finite State Machines Experiment
 
 ## Installation
 
@@ -34,20 +26,59 @@ bin/cake server -p 8765
 
 Then visit `http://localhost:8765` to see the welcome page.
 
-## Update
+## Enpoints
 
-Since this skeleton is a starting point for your application and various files
-would have been modified as per your needs, there isn't a way to provide
-automated upgrades, so you have to do any updates manually.
+### List
+```
+GET /machines
+```
 
-## Configuration
+Returns the machines saved in the session.
 
-Read and edit the environment specific `config/app_local.php` and setup the 
-`'Datasources'` and any other configuration relevant for your application.
-Other environment agnostic settings can be changed in `config/app.php`.
+### Add
+```json
+POST /machines/create
 
-## Layout
+{
+  "states": ["awake", "sleeping", ...],
+  "transitions": ["08:00", "12:00", ...],
+}
+```
 
-The app skeleton uses [Milligram](https://milligram.io/) (v1.3) minimalist CSS
-framework by default. You can, however, replace it with any other library or
-custom styles.
+Adds a machine to the session.
+
+### transit
+```json
+POST /machines/transit/:id
+
+{
+  "state": "awake"
+}
+
+OR
+
+{
+    "transition": "08:00"
+}
+```
+
+If you only send the state, the application will return the machines possible transitions;
+If you send a valid transition, the application will update the machine state.
+
+### transit
+```json
+POST /machines/transit/:id
+
+{
+  "state": "awake"
+}
+
+OR
+
+{
+    "transition": "08:00"
+}
+```
+
+If you only send the state, the application will return the machines possible transitions;
+If you send a valid transition, the application will update the machine state.
